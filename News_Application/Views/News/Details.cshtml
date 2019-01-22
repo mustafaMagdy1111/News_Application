@@ -1,0 +1,58 @@
+﻿@model News_Application.Models.News
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>News</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model._News)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model._News)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Img_Url)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Img_Url)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Publiction_Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Publiction_Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Creation_nDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Creation_nDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.authorID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.authorID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

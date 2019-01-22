@@ -20,6 +20,9 @@ namespace News_Application.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Author> authors { get; set; }
+        public DbSet<News> news { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
