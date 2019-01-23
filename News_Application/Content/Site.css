@@ -30,3 +30,8 @@ textarea {
 {
     border:2px solid red;
 }
+
+.imp form-control
+{
+    display:block;
+}

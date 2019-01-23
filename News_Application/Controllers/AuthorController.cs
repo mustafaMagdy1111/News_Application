@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using News_Application.Models;
 
 namespace News_Application.Areas.Admin.Controllers
@@ -17,6 +18,8 @@ namespace News_Application.Areas.Admin.Controllers
         // GET: Admin/Author
         public ActionResult Index()
         {
+
+
             return View(db.authors.ToList());
         }
 

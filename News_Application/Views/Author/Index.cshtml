@@ -6,9 +6,14 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.Partial("_CreateButtonPartian")
-</p>
+@if (Request.IsAuthenticated)
+
+{
+
+    <p>
+        @Html.Partial("_CreateButtonPartian")
+    </p>
+}
 <table class="table table-striped table-condensed">
     <tr class="success">
         <th>
@@ -43,11 +48,37 @@
                 @Html.DisplayFor(modelItem => item.DateOfBirth)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+
+
+
+                @if (Request.IsAuthenticated)
+
+                {
+
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn-success" });
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn-success" });
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn-success" });
+
+                }
+
+
+
             </td>
         </tr>
     }
 
 </table>
+<style>
+    form-control {
+        display: block;
+        width: 100%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+    }
+</style>

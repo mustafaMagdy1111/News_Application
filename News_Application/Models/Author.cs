@@ -13,6 +13,7 @@ namespace News_Application.Models
         public int Id { get; set; }
 
         [Required]
+        [DisplayName("Author Name")]
         public string Name { get; set; }
 
         [DisplayName("Date Of Birth")]
