@@ -9,7 +9,7 @@ namespace News_Application.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(News_Application.Models.ApplicationDbContext context)

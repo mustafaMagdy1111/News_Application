@@ -1,4 +1,4 @@
-﻿@model News_Application.ViewModel.AuthorViewModel
+﻿@model IEnumerable<News_Application.Models.News>
 
 @{
     ViewBag.Title = "Index";
@@ -7,51 +7,64 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.Partial("_CreateButtonPartian")
 </p>
-<table class="table">
-    <tr>
+<table class="table table-striped table-condensed">
+    <tr class="success">
         <th>
-            @Html.DisplayNameFor(model => model.newss._News)
+
+            @Html.DisplayNameFor(model => model._News)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.newss.Img_Url)
+
+            @Html.DisplayNameFor(model => model.Img_Url)
+        </th>
+ 
+        <th>
+            @Html.DisplayNameFor(model => model.Publiction_Date)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.newss.Publiction_Date)
+            @Html.DisplayNameFor(model => model.Creation_nDate)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.newss.Creation_nDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.newss.authorID)
+            @Html.DisplayNameFor(model => model.authorID)
         </th>
         <th></th>
     </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <a href="~/News/ViewNews?news=@item.Id">@Html.DisplayFor(modelItem => item._News)</a>
+            </td>
+            <td>
+                <img width="30px" height="30px" src="~/Uploads/@item.Id"    onclick="viewreport(@item.Id)" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publiction_Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Creation_nDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.authorID)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+        
+    }
 
-@foreach (var item in Model.news) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item._News)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Img_Url)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Publiction_Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Creation_nDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.authorID)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+
+
+
 
 </table>
+<script>
+    var viewreport = function (news_id) {
+        window.location.href = "../News/ViewNews?news=" + news_id;
+    }
+</script>

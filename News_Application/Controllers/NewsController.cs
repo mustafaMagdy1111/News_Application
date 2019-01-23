@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -18,16 +19,9 @@ namespace News_Application.Controllers
         // GET: News
         public ActionResult Index()
         {
-            var authorView = new AuthorViewModel
-            {
-                news = db.news
-                .Include(m => m.author.Name).
-                ToList(),
-                authors=db.authors.ToList()
-
-            };
-            
-            return View(authorView);
+            IEnumerable<News> news = db.news.ToList();
+            //  var news = db.news.ToList();
+            return View(news);
         }
 
         // GET: News/Details/5
@@ -46,39 +40,109 @@ namespace News_Application.Controllers
         }
 
         // GET: News/Create
+        [Authorize]
         public ActionResult Create()
         {
             var news = new News();
             var authorsView = new AuthorViewModel
-            {    newss = news,
+            {
+                newss = news,
                 authors = db.authors.ToList()
-        };
-
+                
+            };
+          
             return View(authorsView);
+        }
+
+        [Authorize]
+        public ActionResult ViewNews(int news)
+        {
+            var dbcontect = db.news.Where(m => m.Id == news).FirstOrDefault();
+            
+
+            return View(dbcontect);
         }
 
         // POST: News/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //[Authorize]
+        //public ActionResult Create(AuthorViewModel authorViewModel)
+        //{
+        //    var news = authorViewModel.newss;
+        //    //news.Publiction_Date = DateTime.Now;
+        //    news.Creation_nDate = DateTime.Now;
+
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        // code to save to database, redirect to other page
+
+        //        db.news.Add(news);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Create", authorViewModel);
+        //    }
+
+
+
+        //    return View(news);
+        //}
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AuthorViewModel authorViewModel)
+        [Authorize]
+        public ActionResult Create(AuthorViewModel authorViewModel, HttpPostedFileBase file)
         {
             var news = authorViewModel.newss;
-            news.Publiction_Date = DateTime.Now;
+            //news.Publiction_Date = DateTime.Now;
             news.Creation_nDate = DateTime.Now;
+
+
             if (ModelState.IsValid)
             {
-
+                // code to save to database, redirect to other page
+                
                 db.news.Add(news);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                if (file != null && file.ContentLength > 0)
+                    try
+                    {
+                        News newss = db.news.OrderByDescending(u => u.Id).FirstOrDefault();
+
+                        string path = Path.Combine(Server.MapPath("~/uploads"),
+                            Path.GetFileName(file.FileName));
+
+                        string filename = Convert.ToString(newss.Id + "ID") + System.IO.Path.GetFileName(file.FileName);
+                        string extension = Path.GetExtension(Path.GetFileName(file.FileName));
+
+                        //   file.SaveAs(Path.Combine(Server.MapPath("~/uploads") + "0" + extension));
+
+                        file.SaveAs(Server.MapPath("~/Uploads/" + newss.Id + extension));
+                        ViewBag.message = "File Uploaded Successfully";
+
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.message = "Error" + ex.Message.ToString();
+                    }
+
+                return RedirectToAction("Index", authorViewModel);
+            }
+            else
+            {
+                return View(news);
+
             }
 
-            return View(news);
         }
 
+
         // GET: News/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -98,6 +162,7 @@ namespace News_Application.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "Id,_News,Img_Url,Publiction_Date,Creation_nDate,authorID")] News news)
         {
             if (ModelState.IsValid)
@@ -143,5 +208,7 @@ namespace News_Application.Controllers
             }
             base.Dispose(disposing);
         }
+
+   
     }
 }

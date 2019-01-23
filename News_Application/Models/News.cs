@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,12 +11,16 @@ namespace News_Application.Models
     {
         public int Id { get; set; }
 
+        [Required]
+        [DisplayName("News")]
         public string _News { get; set; }
 
         [DisplayName("Image Url")]
         public string Img_Url { get; set; }
 
+   
         [DisplayName("Publiction Date")]
+        [PublicationDateValidation]
         public DateTime Publiction_Date { get; set; }
 
         [DisplayName("Creation Date")]
@@ -24,5 +29,7 @@ namespace News_Application.Models
         public Author author { get; set; }
 
         public byte authorID { get; set; }
+
+        public string Title { get; set; }
     }
 }

@@ -1,0 +1,21 @@
+﻿@model News_Application.Models.News
+
+
+
+<div class="card" style="background-color:burlywood">
+    @{ 
+        var x =  + Model.Id+".jpg";
+    }
+    <img class="card-img-top" src="~/Uploads/@x" width="1000" height="200"  alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title" style="text-decoration:underline">  @Model.Title  </h5>
+        <p class="card-text"> @Model._News</p>
+        <p class="card-text"><small class="text-muted">@Model.Publiction_Date</small></p>
+ </div>
+    </div>
+
+<style>
+   img{
+       border-radius:30px
+       }
+</style>    

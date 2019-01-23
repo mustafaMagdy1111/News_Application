@@ -36,6 +36,7 @@ namespace News_Application.Areas.Admin.Controllers
         }
 
         // GET: Admin/Author/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +47,7 @@ namespace News_Application.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create([Bind(Include = "Id,DateOfBirth,PhoneNumber,Email,Name")] Author author)
         {
             if (ModelState.IsValid)
@@ -59,6 +61,7 @@ namespace News_Application.Areas.Admin.Controllers
         }
 
         // GET: Admin/Author/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -78,6 +81,7 @@ namespace News_Application.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "Id,DateOfBirth,PhoneNumber,Email,Name")] Author author)
         {
             if (ModelState.IsValid)
@@ -90,6 +94,7 @@ namespace News_Application.Areas.Admin.Controllers
         }
 
         // GET: Admin/Author/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)

@@ -183,7 +183,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
-    <Compile Include="Dto\NewsDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -203,12 +202,17 @@
     <Compile Include="Migrations\201901211551462_EditNews_model1.Designer.cs">
       <DependentUpon>201901211551462_EditNews_model1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901211703204_update-autho.cs" />
+    <Compile Include="Migrations\201901211703204_update-autho.Designer.cs">
+      <DependentUpon>201901211703204_update-autho.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\News.cs" />
+    <Compile Include="Models\PublicationDateValidation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\AuthorViewModel.cs" />
@@ -228,6 +232,7 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Uploads\0.jpg" />
     <Content Include="Views\Author\Create.cshtml" />
     <Content Include="Views\Author\Delete.cshtml" />
     <Content Include="Views\Author\Details.cshtml" />
@@ -288,6 +293,8 @@
     <Content Include="Views\News\Details.cshtml" />
     <Content Include="Views\News\Edit.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
+    <Content Include="Views\News\ViewNews.cshtml" />
+    <Content Include="Views\News\Upload_file.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -319,6 +326,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901211551462_EditNews_model1.resx">
       <DependentUpon>201901211551462_EditNews_model1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901211703204_update-autho.resx">
+      <DependentUpon>201901211703204_update-autho.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

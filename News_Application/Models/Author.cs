@@ -12,6 +12,7 @@ namespace News_Application.Models
     {
         public int Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
         [DisplayName("Date Of Birth")]
