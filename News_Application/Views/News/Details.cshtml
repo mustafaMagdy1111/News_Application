@@ -4,10 +4,20 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<style>
+
+    .dl-horizontal dt
+    {
+        text-align:left;
+        margin-bottom:5px;
+    }
+</style>
 
 <div>
-    <h4>News</h4>
+    <br />
+    @Html.Partial("_backToListButtonPartial")
+    <h4>Details News</h4>
+
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -23,8 +33,8 @@
         </dt>
 
         @*<dd>
-            @Html.DisplayFor(model => model.Img_Url)
-        </dd>*@
+                @Html.DisplayFor(model => model.Img_Url)
+            </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.Publiction_Date)
@@ -53,6 +63,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+ 
+
 </p>

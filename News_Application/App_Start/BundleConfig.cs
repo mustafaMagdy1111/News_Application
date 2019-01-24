@@ -24,6 +24,7 @@ namespace News_Application
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/newsStyle.css",
                       "~/Content/site.css"));
 
 

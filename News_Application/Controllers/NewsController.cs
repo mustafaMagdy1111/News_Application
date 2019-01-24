@@ -63,6 +63,7 @@ namespace News_Application.Controllers
             return View(authorsView);
         }
 
+
         public ActionResult ViewNews(int news)
         {
             var dbcontect = db.news.Where(m => m.Id == news).FirstOrDefault();
@@ -71,32 +72,7 @@ namespace News_Application.Controllers
             return View(dbcontect);
         }
 
-        // POST: News/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[Authorize]
-        //public ActionResult Create(AuthorViewModel authorViewModel)
-        //{
-        //    var news = authorViewModel.newss;
-        //    //news.Publiction_Date = DateTime.Now;
-        //    news.Creation_nDate = DateTime.Now;
-
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        // code to save to database, redirect to other page
-
-        //        db.news.Add(news);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Create", authorViewModel);
-        //    }
-
-
-
-        //    return View(news);
-        //}
+      
 
 
         [HttpPost]
@@ -188,8 +164,16 @@ namespace News_Application.Controllers
             if (ModelState.IsValid)
             {
                 // code to save to database, redirect to other page
+                var customerInDb = db.news.Single(c => c.Id == news.Id);
+                customerInDb._News = news._News;
+                customerInDb.Title = news.Title;
+                customerInDb.Publiction_Date = news.Publiction_Date;
+                customerInDb.Creation_nDate = news.Creation_nDate;
+             //   customerInDb.Img_Url=news.Id + ".jpg";
+                ;
 
-                db.news.Add(news);
+
+                //  db.news.Add(customerInDb);
                 db.SaveChanges();
 
                 if (file != null && file.ContentLength > 0)

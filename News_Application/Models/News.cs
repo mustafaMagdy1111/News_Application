@@ -20,7 +20,7 @@ namespace News_Application.Models
 
    
         [DisplayName("Publiction Date")]
-        [PublicationDateValidation]
+      //  [PublicationDateValidation]
         public DateTime Publiction_Date { get; set; }
 
         [DisplayName("Creation Date")]

@@ -8,76 +8,81 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create the News First then Upload the Related photo</h2>
+<style>
+
+
+</style>
+
 
 @using (Html.BeginForm("Edit", "News", FormMethod.Post,
                                          new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>News</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.newss._News, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.newss._News, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.newss._News, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.newss.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.newss.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.newss.Title, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        @using (Html.BeginForm("Upload_file", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            <div class="form-group">
-
-                @*<label for="thumnail" class="col-md-2">upload Image</label>*@
-
-                <div class="col-md-offset-3">
-                    Upload Image
-                    <input type="file" name="file" accept="image/x-png,image/gif,image/jpeg">
-                </div>
-            </div>
-
-        }
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.newss.Publiction_Date, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.newss.Publiction_Date, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
-                @Html.ValidationMessageFor(model => model.newss.Publiction_Date, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(m => m.newss.authorID, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(m => m.newss.authorID, new SelectList(Model.authors, "Id", "Name"), "Select Author", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.newss.authorID, "", new { @class = "text-danger" })
-
-            </div>
-
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                @ViewBag.hello@Model.newss.Title
-                <input type="submit" value="Save" class="btn btn-success" />
-            </div>
+<div class="form-horizontal">
+    <div style="margin-top:10px">
+        @Html.Partial("_backToListButtonPartial")
+    </div>
+    <h4>Edit News</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.newss._News, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10 news-area">
+            @Html.TextAreaFor(model => model.newss._News, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.newss._News, "", new { @class = "text-danger" })
         </div>
     </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.newss.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10 ">
+            @Html.EditorFor(model => model.newss.Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.newss.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    @using (Html.BeginForm("Upload_file", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-group">
+
+            @*<label for="thumnail" class="col-md-2">upload Image</label>*@
+
+            <div class="col-md-offset-3">
+                Upload Image
+                <input type="file" src="~/Uploads/@Model.newss.Img_Url" name="file" accept="image/x-png,image/gif,image/jpeg">
+            </div>
+        </div>
+
+    }
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.newss.Publiction_Date, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.newss.Publiction_Date, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+            @Html.ValidationMessageFor(model => model.newss.Publiction_Date, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.newss.authorID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.newss.authorID, new SelectList(Model.authors, "Id", "Name"), "Select Author", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.newss.authorID, "", new { @class = "text-danger" })
+
+        </div>
+
+    </div>
+    @Html.HiddenFor(m => m.newss.Id);
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-success" />
+        </div>
+    </div>
+</div>
 }
 
 
-<div>
-    @Html.Partial("_backToListButtonPartial")
-</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
