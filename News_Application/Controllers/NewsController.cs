@@ -73,8 +73,6 @@ namespace News_Application.Controllers
         }
 
       
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
@@ -169,7 +167,7 @@ namespace News_Application.Controllers
                 customerInDb.Title = news.Title;
                 customerInDb.Publiction_Date = news.Publiction_Date;
                 customerInDb.Creation_nDate = news.Creation_nDate;
-             //   customerInDb.Img_Url=news.Id + ".jpg";
+                customerInDb.Img_Url=news.Id + ".jpg";
                 ;
 
 
@@ -179,7 +177,7 @@ namespace News_Application.Controllers
                 if (file != null && file.ContentLength > 0)
                     try
                     {
-                        News newss = db.news.OrderByDescending(u => u.Id).FirstOrDefault();
+                        News newss = db.news.FirstOrDefault(m => m.Id == news.Id);
 
                         string path = Path.Combine(Server.MapPath("~/uploads"),
                             Path.GetFileName(file.FileName));
