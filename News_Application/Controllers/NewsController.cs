@@ -39,20 +39,7 @@ namespace News_Application.Controllers
             return View(author);
         }
 
-        // GET: News/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            News news = db.news.Find(id);
-            if (news == null)
-            {
-                return HttpNotFound();
-            }
-            return View(news);
-        }
+
 
         // GET: News/Create
         [Authorize]
@@ -215,6 +202,7 @@ namespace News_Application.Controllers
 
 
         // GET: News/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)

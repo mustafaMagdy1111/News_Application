@@ -57,22 +57,7 @@ namespace News_Application.Areas.Admin.Controllers
             }
         }
 
-
-        // GET: Admin/Author/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            author author = db.authors.Find(id);
-            if (author == null)
-            {
-                return HttpNotFound();
-            }
-            return View(author);
-        }
-
+        
         // GET: Admin/Author/Create
         [Authorize]
         public ActionResult Create()
