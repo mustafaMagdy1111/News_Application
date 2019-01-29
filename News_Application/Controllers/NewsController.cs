@@ -194,7 +194,9 @@ namespace News_Application.Controllers
             }
             else
             {
-                return View(news);
+                //return View(news);
+                authorViewModel.authors = db.authors.ToList();
+                return View(authorViewModel);
 
             }
 

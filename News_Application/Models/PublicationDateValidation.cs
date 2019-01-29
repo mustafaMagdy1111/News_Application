@@ -14,7 +14,7 @@ namespace News_Application.Models
             var news = (News)validationContext.ObjectInstance;
             var day =  news.Publiction_Date.DayOfYear - DateTime.Now.DayOfYear;
 
-            if(day<7)
+            if(day<7&&day>0)
             {
                 return ValidationResult.Success;
             }
