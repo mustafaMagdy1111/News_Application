@@ -1,64 +1,71 @@
 ﻿@model News_Application.Models.News
 
-@{
-    ViewBag.Title = "Delete";
-}
 
-<h2>Delete</h2>
+<div class="modal-content">
+    <div class="modal-header">
+        <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>News</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model._News)
-        </dt>
+        <h3>Are you sure you want to delete this?</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model._News)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Img_Url)
-        </dt>
+    @using (Html.BeginForm("Delete", "News", FormMethod.Post, new { @class = "m-form m-form--fit m-form--label-align-right" }))
+    {
 
-        <dd>
-            @Html.DisplayFor(model => model.Img_Url)
-        </dd>
+    <div class="modal-body">
+        @Html.HiddenFor(model => model.Id)
+        <h4>News</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model._News)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Publiction_Date)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model._News)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Publiction_Date)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Img_Url)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Creation_nDate)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Img_Url)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Creation_nDate)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Publiction_Date)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.authorID)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Publiction_Date)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.authorID)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Creation_nDate)
+            </dt>
 
-    </dl>
+            <dd>
+                @Html.DisplayFor(model => model.Creation_nDate)
+            </dd>
 
-    @using (Html.BeginForm()) {
+            <dt>
+                @Html.DisplayNameFor(model => model.authorID)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.authorID)
+            </dd>
+
+        </dl>
+    </div>
+    <div class="modal-footer">
         @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+        <button class="btn btn-primary" data-dismiss="modal">Close</button>
+        <input id="DeleteGroup" class="btn btn-danger" type="submit" value="Submit" />
+    </div>
     }
 </div>

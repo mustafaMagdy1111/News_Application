@@ -8,9 +8,9 @@ namespace News_Application.ViewModel
 {
     public class AuthorViewModel
     {
-        public IEnumerable<Author> authors { get; set; }
+        public IEnumerable<author> authors { get; set; }
         public IEnumerable<News> news { get; set; }
-        public Author author { get; set; }
+        public author author { get; set; }
         public News  newss { get; set; }
 
     }

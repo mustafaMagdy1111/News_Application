@@ -8,7 +8,7 @@ using System.Web;
 
 namespace News_Application.Models
 {
-    public class Author
+    public class author
     {
         public int Id { get; set; }
 

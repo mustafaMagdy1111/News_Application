@@ -7,7 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using AutoMapper;
 using News_Application.Models;
+using News_Application.ViewModel;
 
 namespace News_Application.Areas.Admin.Controllers
 {
@@ -22,6 +24,39 @@ namespace News_Application.Areas.Admin.Controllers
 
             return View(db.authors.ToList());
         }
+        //data in json to be used in Data Table
+        public object Load()
+        {
+            var all = new List<AuthorVM>();
+            var authors = db.authors.ToList();
+            foreach (var authr in authors)
+            {
+                all.Add(new AuthorVM()
+                {
+                    Name = authr.Name,
+                    Id = authr.Id,
+                    DateOfBirth = authr.DateOfBirth.ToShortDateString(),
+                    PhoneNumber = authr.PhoneNumber,
+                    Email = authr.Email
+                });
+            }
+            return Json(new {data = all });
+        }
+        //model which show popup confirmation message
+        public ActionResult ConfirmChangeActivity(long id)
+        {
+            var news = db.news.Where(m => m.authorID == id);
+            if(news.Count() != 0)
+            {
+                return PartialView("~/Views/Author/PreventDelete.cshtml");
+            }
+            else
+            {
+                var model = db.authors.Where(m => m.Id == id).FirstOrDefault();
+                return PartialView("~/Views/Author/Delete.cshtml", model);
+            }
+        }
+
 
         // GET: Admin/Author/Details/5
         public ActionResult Details(int? id)
@@ -30,7 +65,7 @@ namespace News_Application.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Author author = db.authors.Find(id);
+            author author = db.authors.Find(id);
             if (author == null)
             {
                 return HttpNotFound();
@@ -51,7 +86,7 @@ namespace News_Application.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create([Bind(Include = "Id,DateOfBirth,PhoneNumber,Email,Name")] Author author)
+        public ActionResult Create([Bind(Include = "Id,DateOfBirth,PhoneNumber,Email,Name")] author author)
         {
             if (ModelState.IsValid)
             {
@@ -71,7 +106,7 @@ namespace News_Application.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Author author = db.authors.Find(id);
+            author author = db.authors.Find(id);
             if (author == null)
             {
                 return HttpNotFound();
@@ -85,7 +120,7 @@ namespace News_Application.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit([Bind(Include = "Id,DateOfBirth,PhoneNumber,Email,Name")] Author author)
+        public ActionResult Edit([Bind(Include = "Id,DateOfBirth,PhoneNumber,Email,Name")] author author)
         {
             if (ModelState.IsValid)
             {
@@ -104,7 +139,7 @@ namespace News_Application.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Author author = db.authors.Find(id);
+            author author = db.authors.Find(id);
             if (author == null)
             {
                 return HttpNotFound();
@@ -115,9 +150,10 @@ namespace News_Application.Areas.Admin.Controllers
         // POST: Admin/Author/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+
+        public ActionResult DeleteConfirmed(author model)
         {
-            Author author = db.authors.Find(id);
+            author author = db.authors.Find(model.Id);
             db.authors.Remove(author);
             db.SaveChanges();
             return RedirectToAction("Index");

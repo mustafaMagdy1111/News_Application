@@ -20,13 +20,13 @@ namespace News_Application.Models
 
    
         [DisplayName("Publiction Date")]
-      //  [PublicationDateValidation]
+        [PublicationDateValidation]
         public DateTime Publiction_Date { get; set; }
 
         [DisplayName("Creation Date")]
         public DateTime Creation_nDate { get; set; }
 
-        public Author author { get; set; }
+        public author author { get; set; }
 
         public byte authorID { get; set; }
 

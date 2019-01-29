@@ -35,3 +35,7 @@ textarea {
 {
     display:block;
 }
+
+table.dataTable thead tr {
+    background-color: #dff0d8;
+}

@@ -23,9 +23,11 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Latest News", "Index", "News")</li>
-                    <li>@Html.ActionLink("Authors", "Index", "Author")</li>
-
-                </ul>
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Authors", "Index", "Author")</li>
+                    }
+                    </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -38,7 +40,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/admin")
-
     @RenderSection("scripts", required: false)
 </body>
 </html>

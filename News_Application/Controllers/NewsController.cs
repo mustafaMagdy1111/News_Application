@@ -19,17 +19,23 @@ namespace News_Application.Controllers
         // GET: News
         public ActionResult Index()
         {
+            IEnumerable<author> authors = db.authors.ToList();
             IEnumerable<News> news = db.news.ToList();
-            IEnumerable<Author> authors = db.authors.ToList();
+            if (!Request.IsAuthenticated)
+            {
+
+                news = db.news.ToList().Where(m => ((m.Publiction_Date.DayOfYear - DateTime.Now.DayOfYear) <= 7) || ((m.Publiction_Date.DayOfYear - DateTime.Now.DayOfYear) <= 0));
+                authors = db.authors.ToList();
+            }
 
             var author = new AuthorViewModel
             {
-               news=news,
-               authors=authors
+                news = news,
+                authors = authors
             };
 
             //  var news = db.news.ToList();
-            
+
             return View(author);
         }
 
@@ -57,9 +63,9 @@ namespace News_Application.Controllers
             {
                 newss = news,
                 authors = db.authors.ToList()
-                
+
             };
-          
+
             return View(authorsView);
         }
 
@@ -67,12 +73,12 @@ namespace News_Application.Controllers
         public ActionResult ViewNews(int news)
         {
             var dbcontect = db.news.Where(m => m.Id == news).FirstOrDefault();
-            
+
 
             return View(dbcontect);
         }
 
-      
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
@@ -81,12 +87,10 @@ namespace News_Application.Controllers
             var news = authorViewModel.newss;
             //news.Publiction_Date = DateTime.Now;
             news.Creation_nDate = DateTime.Now;
-
-
             if (ModelState.IsValid)
             {
                 // code to save to database, redirect to other page
-                
+
                 db.news.Add(news);
                 db.SaveChanges();
 
@@ -116,9 +120,12 @@ namespace News_Application.Controllers
             }
             else
             {
-                return View(news);
+                authorViewModel.authors = db.authors.ToList();
+                return View(authorViewModel);
 
             }
+
+
 
         }
 
@@ -167,7 +174,7 @@ namespace News_Application.Controllers
                 customerInDb.Title = news.Title;
                 customerInDb.Publiction_Date = news.Publiction_Date;
                 customerInDb.Creation_nDate = news.Creation_nDate;
-                customerInDb.Img_Url=news.Id + ".jpg";
+                customerInDb.Img_Url = news.Id + ".jpg";
                 ;
 
 
@@ -242,6 +249,13 @@ namespace News_Application.Controllers
             base.Dispose(disposing);
         }
 
-   
+
+        public ActionResult ConfirmChangeActivity(long id)
+        {
+            var model = db.news.Where(m => m.Id == id).FirstOrDefault();
+            return PartialView("~/Views/News/Delete.cshtml", model);
+
+        }
+
     }
 }

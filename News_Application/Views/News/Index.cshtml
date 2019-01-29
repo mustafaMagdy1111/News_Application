@@ -15,16 +15,13 @@
         height: 60px;
         overflow-y: auto;
         display: inline-block;
-
-   
         word-wrap: break-word;
     }
 
 
 
-    .img{
-
-        width:90px;
+    .img {
+        width: 90px;
     }
 
         .img img {
@@ -32,7 +29,6 @@
             height: 70px;
             border-radius: 5px;
         }
-
 </style>
 
 @{
@@ -50,85 +46,91 @@
     </p>
 }
 
-    <div class="table-responsive">
-        <table class="table table-striped table-condensed">
-            <tr class="success">
-                <th>
+<div class="table-responsive">
+    <table class="table table-striped table-condensed">
+        <tr class="success">
+            <th>
 
-                    @Html.DisplayNameFor(model => model.newss._News)
-                </th>
-                <th>
+                @Html.DisplayNameFor(model => model.newss._News)
+            </th>
+            <th>
 
-                    @Html.DisplayNameFor(model => model.newss.Img_Url)
-                </th>
-                <th>
+                @Html.DisplayNameFor(model => model.newss.Img_Url)
+            </th>
+            <th>
 
-                    @Html.DisplayNameFor(model => model.newss.Title)
-                </th>
+                @Html.DisplayNameFor(model => model.newss.Title)
+            </th>
 
-                <th>
-                    @Html.DisplayNameFor(model => model.newss.Publiction_Date)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.newss.Creation_nDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.author.Name)
-                </th>
-                <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.newss.Publiction_Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.newss.Creation_nDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.author.Name)
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model.news)
+        {
+
+            item.author = Model.authors.FirstOrDefault(m => m.Id == item.authorID);
+            <tr>
+
+                <td class="news">
+                    @Html.DisplayFor(modelItem => item._News)
+                </td>
+
+                <td class="img">
+                    @{
+                        string x = item.Id + ".jpg";
+                    }
+                    <img src="~/Uploads/@x" onclick="viewreport(@item.Id)" />
+                </td>
+                <td>
+                    <a href="~/News/ViewNews?news=@item.Id">@Html.DisplayFor(modelItem => item.Title)</a>
+
+                    @*@Html.DisplayFor(modelItem => item.Title)*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publiction_Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Creation_nDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.author.Name)
+                </td>
+                <td>
+                    @if (Request.IsAuthenticated)
+
+                    {
+
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = " btn btn-warning" });
+                        <button type="button" value="Delete" onclick="loaddeleted(@item.Id)" class="btn btn-danger">Delete</button>
+                        @*@Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = " btn btn-danger" });*@
+
+                    }
+                </td>
             </tr>
-            @foreach (var item in Model.news)
-            {
 
-                item.author = Model.authors.FirstOrDefault(m => m.Id == item.authorID);
-                <tr>
+        }
+    </table>
+</div>
+<div id="Modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+    <div id="ModalContent" class="modal-dialog modal-lg" role="document">
 
-                    <td class="news">
-                        @Html.DisplayFor(modelItem => item._News)
-                    </td>
+    </div>
+</div>
+<script>
+    var viewreport = function (news_id) {
+        window.location.href = "../News/ViewNews?news=" + news_id;
+    }
 
-                    <td class="img">
-                        @{
-                            string x = item.Id + ".jpg";
-                        }
-                        <img src="~/Uploads/@x" onclick="viewreport(@item.Id)" />
-                    </td>
-                    <td>
-                        <a href="~/News/ViewNews?news=@item.Id">@Html.DisplayFor(modelItem => item.Title)</a>
-
-                        @*@Html.DisplayFor(modelItem => item.Title)*@
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Publiction_Date)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Creation_nDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.author.Name)
-                    </td>
-                    <td>
-                        @if (Request.IsAuthenticated)
-
-                        {
-
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = " btn btn-success" });
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = " btn btn-danger" });
-
-                        }
-                    </td>
-                </tr>
-
-            }
-
-
-
-
-
-        </table>
-        </div>
-        <script>
-            var viewreport = function (news_id) {
-                window.location.href = "../News/ViewNews?news=" + news_id;
-            }
-        </script>
+    var loaddeleted = function (newsid) {
+        $("#ModalContent").load("@Url.Action("ConfirmChangeActivity", "News")" + "?id=" + newsid);
+	    $("#Modal").modal("show");
+    }
+</script>

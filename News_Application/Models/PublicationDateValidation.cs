@@ -12,7 +12,7 @@ namespace News_Application.Models
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var news = (News)validationContext.ObjectInstance;
-            var day =  news.Publiction_Date.Day - DateTime.Now.Day;
+            var day =  news.Publiction_Date.DayOfYear - DateTime.Now.DayOfYear;
 
             if(day<7)
             {
@@ -20,7 +20,7 @@ namespace News_Application.Models
             }
             else
             {
-                return (new ValidationResult("no no no"));
+                return new ValidationResult("Date must be From today and a week From today");
             }
        
            

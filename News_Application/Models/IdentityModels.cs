@@ -20,7 +20,7 @@ namespace News_Application.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Author> authors { get; set; }
+        public DbSet<author> authors { get; set; }
         public DbSet<News> news { get; set; }
 
         public ApplicationDbContext()

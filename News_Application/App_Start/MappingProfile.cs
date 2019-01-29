@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using News_Application.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,8 @@ namespace News_Application.App_Start
     {
         public MappingProfile()
         {
-          //  Mapper.CreateMap<>
-        }   
- }
+          
+
+        }
+    }
 }
